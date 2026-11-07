@@ -106,7 +106,7 @@ function loadFile(name: SoundName): Promise<AudioBuffer | null> {
     if (!c) return null;
     for (const ext of FILE_TYPES) {
       try {
-        const res = await fetch(`/sounds/${name}.${ext}`);
+        const res = await fetch(`${process.env.EXPO_BASE_URL ?? ''}/sounds/${name}.${ext}`);
         // The dev server answers unknown paths with the app's HTML page, so check the type.
         if (!res.ok || (res.headers.get('content-type') ?? '').includes('text/html')) continue;
         return await c.decodeAudioData(await res.arrayBuffer());
